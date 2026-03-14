@@ -29,8 +29,8 @@ jobs:
 
     - name: Test bad URDF (expect exit 2)
       run: |
-        ./urdf-doctor tests/test_bad.urdf --quiet
-        CODE=$?
+        ./urdf-doctor tests/test_bad.urdf --quiet || CODE=$?
+        CODE=${CODE:-0}
         [ $CODE -eq 2 ] && echo "Correctly detected errors (exit $CODE)" || (echo "Expected exit 2, got $CODE" && exit 1)
 
     - name: Test --all flag

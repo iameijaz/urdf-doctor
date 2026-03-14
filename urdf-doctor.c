@@ -888,7 +888,7 @@ int main(int argc, char *argv[]) {
     if (!filename) { usage(argv[0]); return 3; }
 
     /* read file */
-    FILE *f = fopen(filename, "r");
+    FILE *f = fopen(filename, "rb");
     if (!f) { fprintf(stderr, "Cannot open: %s\n", filename); return 3; }
     fseek(f, 0, SEEK_END);
     long sz = ftell(f);
