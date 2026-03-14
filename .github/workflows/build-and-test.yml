@@ -1,0 +1,75 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build
+      run: gcc -Wall -Wextra -O2 -std=c99 -o urdf-doctor urdf-doctor.c -lm
+
+    - name: Test --version
+      run: ./urdf-doctor --version
+
+    - name: Test --help
+      run: ./urdf-doctor --help
+
+    - name: Test clean URDF (expect exit 0)
+      run: ./urdf-doctor tests/test_good.urdf
+
+    - name: Test bad URDF (expect exit 2)
+      run: |
+        ./urdf-doctor tests/test_bad.urdf --quiet
+        CODE=$?
+        [ $CODE -eq 2 ] && echo "Correctly detected errors (exit $CODE)" || (echo "Expected exit 2, got $CODE" && exit 1)
+
+    - name: Test --all flag
+      run: ./urdf-doctor tests/test_bad.urdf --all || true
+
+    - name: Test --errors flag
+      run: ./urdf-doctor tests/test_bad.urdf --errors || true
+
+    - name: Test --no-color flag
+      run: ./urdf-doctor tests/test_bad.urdf --no-color || true
+
+    - name: Test make
+      run: make clean && make
+
+    - name: Test make install
+      run: sudo make install && which urdf-doctor && urdf-doctor --version
+
+    - name: Upload binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: urdf-doctor-linux
+        path: urdf-doctor
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build
+      run: gcc -Wall -Wextra -O2 -std=c99 -o urdf-doctor.exe urdf-doctor.c -lm
+
+    - name: Test --version
+      run: ./urdf-doctor.exe --version
+
+    - name: Test clean URDF
+      run: ./urdf-doctor.exe tests/test_good.urdf
+
+    - name: Upload binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: urdf-doctor-windows
+        path: urdf-doctor.exe
