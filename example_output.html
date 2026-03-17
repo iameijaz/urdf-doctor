@@ -1,0 +1,56 @@
+<pre><font color="#26A269"><b>jarvis@verbit</b></font>:<font color="#12488B"><b>~/urdf_doctor/urdf-doctor</b></font>$ urdf-doctor 
+urdf-doctor v1.0.0 — URDF static analysis tool
+
+Usage: urdf-doctor [options] &lt;robot.urdf&gt;
+
+Options:
+  -a, --all         Show all diagnostics including INFO
+  -e, --errors      Show only errors (no warnings)
+  -q, --quiet       Only print summary line
+  --no-color        Disable colour output
+  --version         Print version
+  --help            Show this help
+
+Exit codes:
+  0  No errors
+  1  Warnings found (no errors)
+  2  Errors found
+  3  Could not read file
+
+Examples:
+  urdf-doctor robot.urdf
+  urdf-doctor robot.urdf --all
+  urdf-doctor robot.urdf --errors
+  urdf-doctor robot.urdf --no-color &gt; report.txt
+<font color="#26A269"><b>jarvis@verbit</b></font>:<font color="#12488B"><b>~/urdf_doctor/urdf-doctor</b></font>$ cp ../../example_robot.urdf.xacro .
+<font color="#26A269"><b>jarvis@verbit</b></font>:<font color="#12488B"><b>~/urdf_doctor/urdf-doctor</b></font>$ ls
+example_robot.urdf.xacro  LICENSE  Makefile  README.md  <font color="#12488B"><b>tests</b></font>  <font color="#26A269"><b>urdf-doctor</b></font>  urdf-doctor.c
+<font color="#26A269"><b>jarvis@verbit</b></font>:<font color="#12488B"><b>~/urdf_doctor/urdf-doctor</b></font>$ urdf-doctor -a example_robot.urdf.xacro 
+<font color="#12488B">urdf-doctor</font> v1.0.0
+<font color="#161616">────────────────────────────────────</font>
+  example_robot.urdf.xacro
+
+  <font color="#A2734C">[WARN ]</font> &lt;base&gt; has visual geometry but no collision geometry
+  <font color="#A2734C">[WARN ]</font> &lt;base&gt; missing &lt;inertial&gt; block — required for dynamic simulation
+  <font color="#A2734C">[WARN ]</font> &lt;l3&gt; has visual geometry but no collision geometry
+  <font color="#A2734C">[WARN ]</font> &lt;l3&gt; missing &lt;inertial&gt; block — required for dynamic simulation
+  <font color="#A2734C">[WARN ]</font> &lt;l2&gt; has visual geometry but no collision geometry
+  <font color="#A2734C">[WARN ]</font> &lt;l2&gt; missing &lt;inertial&gt; block — required for dynamic simulation
+  <font color="#A2734C">[WARN ]</font> &lt;l1&gt; has visual geometry but no collision geometry
+  <font color="#A2734C">[WARN ]</font> &lt;l1&gt; missing &lt;inertial&gt; block — required for dynamic simulation
+  <font color="#A2734C">[WARN ]</font> &lt;grip&gt; has visual geometry but no collision geometry
+  <font color="#A2734C">[WARN ]</font> &lt;grip&gt; missing &lt;inertial&gt; block — required for dynamic simulation
+  <font color="#A2734C">[WARN ]</font> &lt;camera&gt; has visual geometry but no collision geometry
+  <font color="#A2734C">[WARN ]</font> &lt;camera&gt; missing &lt;inertial&gt; block — required for dynamic simulation
+  <font color="#12488B">[INFO ]</font> &lt;base_to_l3&gt; no &lt;safety_controller&gt; defined — soft limits not set
+  <font color="#12488B">[INFO ]</font> &lt;l3_to_l2&gt; no &lt;safety_controller&gt; defined — soft limits not set
+  <font color="#12488B">[INFO ]</font> &lt;l2_to_l1&gt; no &lt;safety_controller&gt; defined — soft limits not set
+  <font color="#12488B">[INFO ]</font> &lt;l1_to_grip&gt; no &lt;safety_controller&gt; defined — soft limits not set
+
+   links     : 7
+   joints    : 6
+   materials : 4
+
+  <font color="#A2734C">⚠ 12 warning(s)</font>
+  ℹ 4 info
+</pre>
